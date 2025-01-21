@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  color     String   @db.VarChar(7)  // To store hex color codes like #FF0000
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
