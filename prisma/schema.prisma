@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   title     String   @db.VarChar(255)
-  color     String   @db.VarChar(7)  // To store hex color codes like #FF0000
+  color     String   @db.VarChar(7)
   completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

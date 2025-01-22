@@ -1,0 +1,1 @@
+<!-- GRANT ALL PRIVILEGES ON *.* TO 'sanusi'@'localhost' WITH GRANT OPTION; -->

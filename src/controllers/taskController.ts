@@ -1,4 +1,3 @@
-// src/controllers/taskController.ts
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
@@ -22,6 +21,24 @@ export const taskController = {
       res.json(tasks);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch tasks' });
+    }
+  },
+  
+  // Get a single task
+  getTask: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const task = await prisma.task.findUnique({
+        where: { id }
+      });
+      
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found' });
+      }
+      
+      res.json(task);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch task' });
     }
   },
 
@@ -48,7 +65,7 @@ export const taskController = {
     try {
       const validatedData = TaskSchema.partial().parse(req.body);
       const task = await prisma.task.update({
-        where: { id: Number(id) },
+        where: { id },
         data: validatedData
       });
       res.json(task);
@@ -66,7 +83,7 @@ export const taskController = {
     const { id } = req.params;
     try {
       await prisma.task.delete({
-        where: { id: Number(id) }
+        where: { id }
       });
       res.status(204).send();
     } catch (error) {
